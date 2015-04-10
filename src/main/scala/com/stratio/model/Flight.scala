@@ -24,7 +24,6 @@ case class Flight (date: DateTime, //Tip: Use ParserUtils.getDateTime
     flightNum: Int,
     actualElapsedTime: Int,
     cRSElapsedTime: Int,
-    airTime: Int,
     arrDelay: Int,
     depDelay: Int,
     origin: String,
@@ -32,7 +31,6 @@ case class Flight (date: DateTime, //Tip: Use ParserUtils.getDateTime
     distance: Int,
     cancelled: Cancelled,
     cancellationCode: Int,
-    diverted: String,
     delay: Delays)
 
 object Flight{
