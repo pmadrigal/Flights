@@ -57,12 +57,12 @@ class FlightDslTest extends FlatSpec with ShouldMatchers with LocalSparkSqlConte
     val errorFlights = correctFlights ++ List(flightErrorLine1, flightErrorLine2)
     val errorTextFlights = sc.parallelize(errorFlights)
   }
-    "FlightDsl" should "parser csv in Fligths" in new WithFlightsText {
-      textFlights.toFlight.collect.sameElements(listFlights) should be(true)
-    }
+  "FlightDsl" should "parser csv in Fligths" in new WithFlightsText {
+    textFlights.toFlight.collect.sameElements(listFlights) should be(true)
+  }
 
-    it should "get all the parsing errors" in new WithErrorsFlightsText {
-      errorTextFlights.toErrors.count should be (3)
-      errorTextFlights.toErrors.countByKey should be (2)
-    }
+  it should "get all the parsing errors" in new WithErrorsFlightsText {
+    errorTextFlights.toErrors.count should be (3)
+    errorTextFlights.toErrors.countByKey should be (2)
+  }
 }

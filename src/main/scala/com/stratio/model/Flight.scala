@@ -4,7 +4,6 @@ import com.stratio.utils.ParserUtils
 import org.apache.spark.AccumulableParam
 import org.joda.time.DateTime
 
-import utils
 
 sealed class Cancelled
 
@@ -70,18 +69,16 @@ object Flight{
   def apply(fields: Array[String]): Flight = {
 
     val (firstChuck, secondChuck) = fields.splitAt(22)
-    val Array(year, month, dayofMonth,  dayOfWeek, departureTime, crsDepatureTime, arrTime, cRSArrTime,
-    uniqueCarrier, flightNum,  actualElapsedTime, cRSElapsedTime, airTime, arrDelay,
-    depDelay, origin, dest, distance, cancelled) = firstChuck
-    val Array(cancellationCode, diverted, carrier, weather, nAS, security,
-    lateAircraft) = secondChuck
+    val Array(year, month, dayOfMonth,dayOfWeek, departureTime, crsDepatureTime, arrTime, cRSArrTime,
+    uniqueCarrier, flightNum, _, actualElapsedTime, cRSElapsedTime,airTime, arrDelay,
+    depDelay, origin, dest, distance, _, _, cancelled) = firstChuck
+    val Array(cancellationCode, diverted, carrier, weather, nAS, security, lateAircraft) = secondChuck
 
     val delays = Delays(parseCancelled(carrier),parseCancelled(weather),parseCancelled(nAS),parseCancelled(security),
-
       parseCancelled(lateAircraft))
 
     Flight(
-      ParserUtils.getDateTime(year.toInt,month.toInt,dayofMonth.toInt),
+      ParserUtils.getDateTime(year.toInt,month.toInt,dayOfMonth.toInt),
       departureTime.toInt,
       crsDepatureTime.toInt,
       arrTime.toInt,
@@ -117,20 +114,19 @@ object Flight{
 
     val output=(integers ++ strings ++ na)
 
-    //output //puede que con esto solo valga
+    output //puede que con esto solo valga
 
-    if(!(output ).isEmpty)
-      (output)
-    else
-      Seq()
+//    if(!(output ).isEmpty)
+//      (output)
+//    else
+//      Seq()
 
   }
 
   def errorOrHealthy(linea : String, input : Seq[String]): Either[Seq[(String,String)], String]= {
 
-    val output =  input.map(in=> Seq(linea).zip(Seq(in))).flatMap(out=> out)
     if(!(input ).isEmpty)
-      Left(output)
+      Left(input.map(in=> Seq(linea).zip(Seq(in))).flatMap(out=> out))
     else
       Right(linea)
   }
@@ -185,16 +181,5 @@ object Flight{
     case "0" => OnTime
     case  _   => Unknown
   }
-
-  //    if (!field.isEmpty) {
-  //
-  //      if (field.compareTo("1") == 0)
-  //        Cancel
-  //      if (field.compareTo("0") == 0)
-  //        OnTime
-  //
-  //    } else Unknown
-  //  }
-
 
 }
