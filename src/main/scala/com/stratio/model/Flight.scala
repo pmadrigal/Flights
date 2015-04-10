@@ -20,24 +20,23 @@ case class Delays (
                     lateAircraft: Cancelled)
 
 case class Flight (date: DateTime, //Tip: Use ParserUtils.getDateTime
-                   departureTime: Int,
-                   crsDepatureTime: Int,
-                   arrTime: Int,
-                   cRSArrTime: Int,
-                   uniqueCarrier: String,
-                   flightNum: Int,
-                   actualElapsedTime: Int,
-                   cRSElapsedTime: Int,
-                   airTime: Int,
-                   arrDelay: Int,
-                   depDelay: Int,
-                   origin: String,
-                   dest: String,
-                   distance: Int,
-                   cancelled: Cancelled,
-                   cancellationCode: Int,
-                   diverted: String,
-                   delay: Delays)
+
+    departureTime: Int,
+    crsDepatureTime: Int,
+    arrTime: Int,
+    cRSArrTime: Int,
+    uniqueCarrier: String,
+    flightNum: Int,
+    actualElapsedTime: Int,
+    cRSElapsedTime: Int,
+    arrDelay: Int,
+    depDelay: Int,
+    origin: String,
+    dest: String,
+    distance: Int,
+    cancelled: Cancelled,
+    cancellationCode: Int,
+    delay: Delays)
 
 object Flight{
 
@@ -91,7 +90,6 @@ object Flight{
       flightNum.toInt,
       actualElapsedTime.toInt,
       cRSElapsedTime.toInt,
-      airTime.toInt,
       arrDelay.toInt,
       depDelay.toInt,
       origin,
@@ -99,7 +97,6 @@ object Flight{
       distance.toInt,
       parseCancelled(cancelled),
       cancellationCode.toInt,
-      diverted,
       delays
     )
   }
